@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <title>Plant Identification</title>
+
+  <script src="https://kit.fontawesome.com/3df97b829c.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="proxy.js"></script>
+  <script>
+    function identifyPlant() {
+      var apiKey = 'SfrXGQaWub08I0ZnWZAu9vFs2neJlhyPEO5aZTYMgQji4A9dDa';
+      // SfrXGQaWub08I0ZnWZAu9vFs2neJlhyPEO5aZTYMgQji4A9dDa
+      var formData = new FormData();
+      var files = document.querySelector('#imageInput').files;
+      for (var i = 0; i < files.length; i++) {
+        formData.append('images', files[i]);
+      }
+
+      $.ajax({
+        
+         url: 'https://api.plant.id/v2/identify',
+        type: 'POST',
+        headers: {
+          'Api-Key': apiKey
+        },
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          displayResults(response);
+        },
+        error: function(error) {
+          console.error('Error:', error);
+        }
+      });
+    }
+
+    function displayResults(response) {
+      var resultsDiv = document.querySelector('#results');
+      resultsDiv.innerHTML = ''; // Clear previous results
+
+      if (response.suggestions.length > 0) {
+        var firstSuggestion = response.suggestions[0];
+
+        var plantInfo = document.createElement('p');
+        plantInfo.textContent = 'Scientific Name: ' + firstSuggestion.plant_name;
+
+
+        var moreInfoButton = document.createElement('button');
+        moreInfoButton.textContent = 'Want to know more';
+
+        moreInfoButton.style.backgroundColor = 'green';
+        moreInfoButton.style.color = '#fff';
+        moreInfoButton.style.border = 'none';
+        moreInfoButton.style.padding = '8px 16px';
+        moreInfoButton.style.borderRadius = '4px';
+        moreInfoButton.style.cursor = 'pointer';
+
+
+        moreInfoButton.onclick = function() {
+          window.open('https://en.wikipedia.org/wiki/' + encodeURIComponent(firstSuggestion.plant_name), '_blank');
+
+        };
+
+        resultsDiv.appendChild(plantInfo);
+        resultsDiv.appendChild(moreInfoButton);
+      } else {
+        var noResultsMessage = document.createElement('p');
+        noResultsMessage.textContent = 'No plant suggestions found.';
+        resultsDiv.appendChild(noResultsMessage);
+      }
+    }
+  </script>
+  <style>
+    .card-img-top {
+      margin: 5px;
+    }
+
+    .center-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .card-title {
+      color: #1d7e33;
+      margin-bottom: 12px;
+      font-weight: 400;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* Style the card */
+    .card {
+      width: 24rem;
+      height: 25.5rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Style the "Choose File" input section */
+    .file-input-section {
+      margin-top: 7px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .custom-file-input {
+      cursor: pointer;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .custom-file-input:hover {
+      background-color: #0056b3;
+    }
+
+    .upload-btn {
+      margin-top: 14px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .upload-btn:hover {
+      background-color: #1d7e33;
+    }
+
+    /* Style the results div */
+
+
+
+    #results {
+      margin-top: 15px;
+
+      border: 1px solid black;
+      /* border-width: 4rem; */
+      border-radius: 5px;
+      padding: 5px;
+      text-align: center;
+      /* Center the content within the div */
+    }
+/* 
+    .navbar-nav .nav-item .nav-link {
+      color: #8ab988;
+    }
+
+    .navbar-nav .nav-item .nav-link {
+      transition: background-color 0.4s ease, color 0.4s ease;
+      border-radius: 5px;
+      color: #14c20a;
+    }
+
+    .login {
+      margin-right: 10px;
+    }
+
+    .navbar-nav .nav-item .nav-link:hover {
+      border-bottom: 1px soild rgb(206, 15, 15);
+      margin-bottom: 0;
+      background-color: #eef3ee;
+      border-radius: 5px;
+      color: #161716;
+      border: 1px solid rgb(29, 238, 29);
+
+    } */
+  </style>
+
+</head>
+
+
+<body>
+  
+
+
+
+
+  <div class="center-container">
+    <!-- Your card -->
+    <div class="card">
+      <img class="card-img-top" src="images/identify_plant.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Upload Image</h5>
+        <div class="file-input-section">
+
+          <input type="file" id="imageInput" accept="image/*" class="file-input">
+          <button class="upload-btn" onclick="identifyPlant()">Identify Plant</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results div -->
+    <div id="results">
+      <h3 class="results-heading">Identification Results:</h3>
+      <!-- Results will be displayed here -->
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+body{
+    background-color: rgba(254, 255, 253, 0.947);
+}
+
+
+
+.badge {
+    border-radius: 0 2px 0 4px !important;
+}
+
+
+#myCard:hover {
+    /*Hover effect in each card*/
+    border: 1px solid #0731ee;
+    box-shadow: 0 0 10px rgba(230, 28, 28, 0.5);
+    transform: translateY(-5px);
+    transition: transform 0.7s ease;
+    
+}
+
+#myCard {
+    position: relative;
+    box-shadow: 0 0 10px rgba(230, 28, 28, 0.5);
+}
+
+#myCard .arrow {
+    transition: margin-left 0.5s ease;
+    /* Add the desired transition duration and easing here */
+}
+
+#myCard:hover .arrow {
+    margin-left: 10px;
+    /* Add the desired left margin value here */
+}
+
+.card-title {
+    /*Change fonts of card title*/
+    font-weight: 500;
+    font-size: larger;
+}
+
+a {
+    /*styling all links*/
+    text-decoration: none;
+    font-size: medium;
+}
+
+.card {
+    /* this code will maintain equal size of cards despite of the content inside them*/
+    height: 90%;
+    min-height: 200px;
+    margin: 15px;
+    padding: 0px 0px 10px 10px;
+}
+
+.card-body {
+    /*Content inside card body is arranged in flexbox in column direction*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-body a {
+    text-decoration: none;
+}
+
+.logo {
+    /*dimensions for logo*/
+    max-width: 20%;
+    max-height: 100px;
+    /* Adjust the value as per your desired height */
+    width: auto;
+    height: auto;
+}
+.footer{
+    background-color: rgb(235, 234, 234);
+}
+.custom-font-style {
+    font-family: "Your Font Name", sans-serif; /* Replace "Your Font Name" with the desired font family */
+    font-size: 24px; /* Adjust the font size as needed */
+    color: #10035e; /* Change the text color as needed */
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.05cm;
+    
+}
+
